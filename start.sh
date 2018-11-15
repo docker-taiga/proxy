@@ -2,6 +2,7 @@
 
 INITIAL_SETUP_LOCK=/run/initial_setup.lock
 if [ ! -f $INITIAL_SETUP_LOCK ]; then
+    [ "$ENABLE_SSL" = 'yes' ] && CONFIG_FILE=nginx_ssl.conf || CONFIG_FILE=nginx.conf
     touch $INITIAL_SETUP_LOCK
     sed -e 's/$TAIGA_HOSTNAME/'$TAIGA_HOSTNAME'/' \
         -e 's/$TAIGA_BACK_HOST/'$TAIGA_BACK_HOST'/' \
@@ -9,9 +10,11 @@ if [ ! -f $INITIAL_SETUP_LOCK ]; then
         -e 's/$EVENTS_HOST/'$EVENTS_HOST'/' \
         -e 's/$CERT_NAME/'$CERT_NAME'/' \
         -e 's/$CERT_KEY/'$CERT_KEY'/' \
-        -i /tmp/taiga-conf/nginx.conf
-    cp /tmp/taiga-conf/nginx.conf /taiga-conf/
+        -i /tmp/taiga-conf/$CONFIG_FILE
+    cp /tmp/taiga-conf/$CONFIG_FILE /taiga-conf/nginx.conf
     ln -sf /taiga-conf/nginx.conf /etc/nginx/conf.d/nginx.conf
+    cp /tmp/taiga-conf/proxy_params /taiga-conf/proxy_params
+    ln -sf /taiga-conf/proxy_params /etc/nginx/proxy_params
 fi
 
 exec nginx -g 'daemon off;'
