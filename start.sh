@@ -1,6 +1,6 @@
 #!/bin/sh
 
-INITIAL_SETUP_LOCK=/run/initial_setup.lock
+INITIAL_SETUP_LOCK=/taiga-conf/.initial_setup.lock
 if [ ! -f $INITIAL_SETUP_LOCK ]; then
     [ "$ENABLE_SSL" = 'yes' ] && CONFIG_FILE=nginx_ssl.conf || CONFIG_FILE=nginx.conf
     touch $INITIAL_SETUP_LOCK
@@ -14,6 +14,9 @@ if [ ! -f $INITIAL_SETUP_LOCK ]; then
     cp /tmp/taiga-conf/$CONFIG_FILE /taiga-conf/nginx.conf
     ln -sf /taiga-conf/nginx.conf /etc/nginx/conf.d/nginx.conf
     cp /tmp/taiga-conf/proxy_params /taiga-conf/proxy_params
+    ln -sf /taiga-conf/proxy_params /etc/nginx/proxy_params
+else
+    ln -sf /taiga-conf/nginx.conf /etc/nginx/conf.d/nginx.conf
     ln -sf /taiga-conf/proxy_params /etc/nginx/proxy_params
 fi
 
