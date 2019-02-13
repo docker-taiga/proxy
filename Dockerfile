@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-ENV TAIGA_HOSTNAME=taiga.lan \
+ENV TAIGA_HOST=taiga.lan \
 	TAIGA_BACK_HOST=127.0.0.1 \
 	TAIGA_FRONT_HOST=127.0.0.1 \
 	EVENTS_HOST=127.0.0.1 \

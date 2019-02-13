@@ -4,7 +4,7 @@ INITIAL_SETUP_LOCK=/run/initial_setup.lock
 if [ ! -f $INITIAL_SETUP_LOCK ]; then
     [ "$ENABLE_SSL" = 'yes' ] && CONFIG_FILE=nginx_ssl.conf || CONFIG_FILE=nginx.conf
     touch $INITIAL_SETUP_LOCK
-    sed -e 's/$TAIGA_HOSTNAME/'$TAIGA_HOSTNAME'/' \
+    sed -e 's/$TAIGA_HOST/'$TAIGA_HOST'/' \
         -e 's/$TAIGA_BACK_HOST/'$TAIGA_BACK_HOST'/' \
         -e 's/$TAIGA_FRONT_HOST/'$TAIGA_FRONT_HOST'/' \
         -e 's/$EVENTS_HOST/'$EVENTS_HOST'/' \
