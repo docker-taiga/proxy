@@ -9,9 +9,8 @@ update_configs() {
         -e 's/$EVENTS_HOST/'$EVENTS_HOST'/' \
         -e 's/$CERT_NAME/'$CERT_NAME'/' \
         -e 's/$CERT_KEY/'$CERT_KEY'/' \
-        -i /tmp/taiga-conf/$CONFIG_FILE
+        /tmp/taiga-conf/$CONFIG_FILE > /taiga-conf/nginx.conf
 
-    cp /tmp/taiga-conf/$CONFIG_FILE /taiga-conf/nginx.conf
     ln -sf /taiga-conf/nginx.conf /etc/nginx/conf.d/nginx.conf
     cp /tmp/taiga-conf/proxy_params /taiga-conf/proxy_params
     ln -sf /taiga-conf/proxy_params /etc/nginx/proxy_params
